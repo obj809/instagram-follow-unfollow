@@ -77,12 +77,12 @@
   outline-offset: 2px;
 }
 
-/* Switch button — Deep Purple */
+/* Switch button — Success Green */
 .switchBar__button {
-  background: linear-gradient(135deg, #7E57C2, #5E35B1);
+  background: linear-gradient(135deg, #4CAF50, #388E3C);
 }
 .switchBar__button:hover {
-  background: linear-gradient(135deg, #6A44B6, #4A2D91);
+  background: linear-gradient(135deg, #43A047, #2E7D32);
   filter: brightness(1.03);
 }
 .switchBar__button:active {

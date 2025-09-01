@@ -1,0 +1,1 @@
+log into IG -> settings menu button -> Settings & Privacy -> See more in Accounts Centre -> Your information and permissions -> Export your information -> Create export -> export to device -> select HTML or JSON format -> Start export -> Download information -> upload to instagram follow unfollow

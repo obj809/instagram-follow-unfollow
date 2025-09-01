@@ -68,10 +68,32 @@
   border-radius: 12px;
   padding: 1rem 1.25rem;
   box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-  text-align: left;
+
+  text-align: center;  /* keeps title centered */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.modal__dialog h3 { margin: 0 0 0.5rem 0; }
-.modal__dialog p { margin: 0 0 1rem 0; line-height: 1.5; }
+
+.modal__dialog h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.modal__dialog p {
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+  text-align: left;   /* body text left-aligned */
+  width: 100%;
+}
+
+/* ✅ NEW: container for buttons */
+.modal__actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  width: 100%;
+}
+
 .modal__close {
   display: inline-block;
   background: #efefef;
@@ -81,4 +103,6 @@
   font-weight: 600;
   cursor: pointer;
 }
-.modal__close:hover { background: #e5e5e5; }
+.modal__close:hover {
+  background: #e5e5e5;
+}

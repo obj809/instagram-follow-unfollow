@@ -49,7 +49,6 @@ export default function SwitchBar({ onModeChange }) {
       className="switchBar"
       role="region"
       aria-label="Follow comparison mode"
-      // allow clicks when About is open (since .switchBar has pointer-events: none)
       style={{ pointerEvents: showAbout ? "auto" : undefined }}
     >
       <div className="switchBar__label" aria-live="polite">
@@ -90,30 +89,50 @@ export default function SwitchBar({ onModeChange }) {
           role="dialog"
           aria-modal="true"
           aria-labelledby="about-modal-title"
-          onClick={closeAbout}             // backdrop closes
+          onClick={closeAbout}
         >
           <div
             className="modal__dialog"
-            onClick={(e) => e.stopPropagation()} // keep clicks inside
+            onClick={(e) => e.stopPropagation()}
           >
             <h3 id="about-modal-title">About This App</h3>
             <p>
               Compare your Instagram <strong>followers</strong> and{" "}
-              <strong>following</strong> lists. Upload one HTML/JSON file into{" "}
-              <em>Section One</em> (Following) and another into <em>Section Two</em> (Followers),
-              then use the switcher below to toggle the view.
+              <strong>following</strong> lists by uploading one file into{" "}
+              <em>Section One</em> (Following) and another into{" "}
+              <em>Section Two</em> (Followers). Use the switcher to toggle
+              views.
             </p>
             <p>
-              Built with React, Vite, and drag-and-drop uploads. Files are processed locally in your browser.
+              <strong>How to export from Instagram (PC):</strong>
+              <br />
+              1. Log in to Instagram and open{" "}
+              <em>Settings &gt; Settings &amp; Privacy</em>.<br />
+              2. Go to <em>Accounts Centre &gt; Your information and permissions</em>.<br />
+              3. Select <em>Export your information</em> → <em>Create export</em>.<br />
+              4. Choose <strong>Export to device</strong> and select{" "}
+              <strong>HTML</strong> or <strong>JSON</strong>.<br />
+              5. Click <em>Start export</em>, then once it’s ready,{" "}
+              <em>Download information</em>.<br />
+              6. Upload <code>followers.json</code>,{" "}
+              <code>following.json</code>, or their HTML versions into this app.
             </p>
-            <button
-              className="modal__close"
-              type="button"
-              onClick={closeAbout}
-              aria-label="Close about dialog"
-            >
-              OK
-            </button>
+            <p>
+              All processing happens in your browser — there is{" "}
+              <strong>no server</strong>, <strong>no database</strong>, and{" "}
+              <strong>no storage</strong> of your files. Your data stays on your
+              device.
+            </p>
+            <div className="modal__actions">
+              <button
+                className="modal__close"
+                type="button"
+                onClick={closeAbout}
+                aria-label="Close about dialog"
+              >
+                OK
+              </button>
+            </div>
           </div>
         </div>
       )}
