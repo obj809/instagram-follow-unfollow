@@ -1,19 +1,23 @@
 // src/components/Section3/Section3.jsx
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./Section3.scss";
 import SwitchBar from "../SwitchBar/SwitchBar";
 
-export default function Section3({ showTextBox }) {
+/**
+ * Displays results and keeps SwitchBar visually identical to before.
+ * SwitchBar reports mode via onModeChange; Section3 uses it to pick which list to show.
+ */
+export default function Section3({ showTextBox, loading, error, results }) {
   const [showPrompt, setShowPrompt] = useState(false);
+  const [mode, setMode] = useState("following_not_following_back");
 
   const handleClick = () => {
-    if (showPrompt) return;          // ignore clicks when modal is open
+    if (showPrompt) return;
     if (!showTextBox) setShowPrompt(true);
   };
 
   const closePrompt = () => setShowPrompt(false);
 
-  // Close on ESC too
   const onKeyDownRoot = (e) => {
     if ((e.key === "Escape" || e.key === "Esc") && showPrompt) {
       e.stopPropagation();
@@ -23,6 +27,18 @@ export default function Section3({ showTextBox }) {
       handleClick();
     }
   };
+
+  const list = useMemo(() => {
+    if (!results) return [];
+    return mode === "following_not_following_back"
+      ? results.notFollowingYouBack
+      : results.youDontFollowBack;
+  }, [mode, results]);
+
+  const heading =
+    mode === "following_not_following_back"
+      ? "Accounts Not Following You Back"
+      : "Accounts You Don’t Follow Back";
 
   return (
     <div
@@ -47,15 +63,35 @@ export default function Section3({ showTextBox }) {
           aria-label="Results area"
           onClick={(e) => e.stopPropagation()}
         >
-          <h3>Comparison Results</h3>
-          <p>
-            Your results will appear here — for example, accounts you follow that don’t follow back,
-            and accounts that follow you that you don’t follow back.
-          </p>
+          {loading ? (
+            <>
+              <h3>Processing…</h3>
+              <p>Parsing your files in the browser.</p>
+            </>
+          ) : error ? (
+            <>
+              <h3>Something went wrong</h3>
+              <p>{error}</p>
+            </>
+          ) : (
+            <>
+              <h3>{heading}</h3>
+              {list?.length ? (
+                <ul className="results-list" aria-live="polite">
+                  {list.map((u) => (
+                    <li key={u}>@{u}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No accounts in this view 🎉</p>
+              )}
+            </>
+          )}
         </div>
       )}
 
-      <SwitchBar />
+      {/* Keep SwitchBar exactly where it was visually; just listen for mode changes */}
+      <SwitchBar onModeChange={setMode} />
 
       {showPrompt && !showTextBox && (
         <div

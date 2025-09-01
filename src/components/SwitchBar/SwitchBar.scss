@@ -1,11 +1,12 @@
 /* src/components/SwitchBar/SwitchBar.scss */
 
+/* Layout: label at top, buttons at bottom */
 .switchBar {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* label at top, buttons at bottom */
+  justify-content: space-between;
   align-items: center;
   padding: 1rem;
   pointer-events: none;
@@ -17,7 +18,7 @@
   line-height: 1.4;
   color: #fff;
   text-align: center;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   padding: 0.6rem 1rem;
   border-radius: 8px;
   max-width: 90%;
@@ -32,13 +33,14 @@
   pointer-events: auto;
 }
 
-/* shared dimensions */
+/* Shared button base */
 .switchBar__button,
 .switchBar__about {
-  border-radius: 8px;
-  padding: 0.65rem 1.2rem;
+  border: 0;
+  border-radius: 10px;
+  padding: 0.65rem 1.4rem;
   min-height: 44px;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1rem;
   line-height: 1;
   display: inline-flex;
@@ -46,28 +48,60 @@
   justify-content: center;
   cursor: pointer;
   text-decoration: none;
-  transition: transform 150ms ease, background 150ms ease;
-}
 
-/* Switch button */
-.switchBar__button {
-  border: 0;
-  background: #4CAF50;
+  transition:
+    transform 150ms ease,
+    background 150ms ease,
+    box-shadow 150ms ease,
+    filter 150ms ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  will-change: transform, box-shadow;
+
   color: #fff;
 }
-.switchBar__button:hover { transform: translateY(-2px); background: #45a049; }
-.switchBar__button:active { transform: translateY(0); }
 
-/* About button (light blue) — IMPORTANT: ensure it's not absolutely positioned */
+.switchBar__button:hover,
+.switchBar__about:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.switchBar__button:active,
+.switchBar__about:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.switchBar__button:focus-visible,
+.switchBar__about:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 2px;
+}
+
+/* Switch button — Deep Purple */
+.switchBar__button {
+  background: linear-gradient(135deg, #7E57C2, #5E35B1);
+}
+.switchBar__button:hover {
+  background: linear-gradient(135deg, #6A44B6, #4A2D91);
+  filter: brightness(1.03);
+}
+.switchBar__button:active {
+  filter: brightness(0.95);
+}
+
+/* About button — Lighter Indigo/Blue */
 .switchBar__about {
-  /* neutralize any global .about-link rules */
   position: static !important;
   top: auto !important;
   left: auto !important;
 
-  border: 0;
-  background: #4FC3F7;
-  color: #fff;
+  /* lighter indigo gradient */
+  background: linear-gradient(135deg, #7986CB, #5C6BC0);
 }
-.switchBar__about:hover { transform: translateY(-2px); background: #42B7EB; }
-.switchBar__about:active { transform: translateY(0); }
+.switchBar__about:hover {
+  background: linear-gradient(135deg, #6F7DC6, #4E5BB5);
+  filter: brightness(1.03);
+}
+.switchBar__about:active {
+  filter: brightness(0.95);
+}

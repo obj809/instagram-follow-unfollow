@@ -124,6 +124,7 @@ export function readFileAsText(file) {
    * - youDontFollowBack: followers minus following
    */
   export function compareSets(followingSet, followersSet) {
+    console.log("Comparing sets", { followingSet, followersSet });
     const notFollowingYouBack = [];
     const youDontFollowBack = [];
   

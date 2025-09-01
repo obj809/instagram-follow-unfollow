@@ -1,8 +1,12 @@
 // src/components/SwitchBar/SwitchBar.jsx
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./SwitchBar.scss";
 
-export default function SwitchBar() {
+/**
+ * Uncontrolled SwitchBar (original structure & styles preserved).
+ * Adds optional onModeChange callback (no visual changes).
+ */
+export default function SwitchBar({ onModeChange }) {
   const [mode, setMode] = useState("following_not_following_back");
   const [showAbout, setShowAbout] = useState(false);
 
@@ -25,13 +29,16 @@ export default function SwitchBar() {
     setShowAbout(false);
   };
 
-  // ✅ Close on ESC key
+  // Notify parent (Section3) of mode changes, if provided
+  useEffect(() => {
+    onModeChange?.(mode);
+  }, [mode, onModeChange]);
+
+  // Close About on ESC (keeps UI intact)
   useEffect(() => {
     if (!showAbout) return;
     const handler = (e) => {
-      if (e.key === "Escape" || e.key === "Esc") {
-        closeAbout();
-      }
+      if (e.key === "Escape" || e.key === "Esc") closeAbout(e);
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
@@ -42,6 +49,7 @@ export default function SwitchBar() {
       className="switchBar"
       role="region"
       aria-label="Follow comparison mode"
+      // allow clicks when About is open (since .switchBar has pointer-events: none)
       style={{ pointerEvents: showAbout ? "auto" : undefined }}
     >
       <div className="switchBar__label" aria-live="polite">
@@ -82,22 +90,21 @@ export default function SwitchBar() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="about-modal-title"
-          onClick={closeAbout} // click backdrop
+          onClick={closeAbout}             // backdrop closes
         >
           <div
             className="modal__dialog"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()} // keep clicks inside
           >
             <h3 id="about-modal-title">About This App</h3>
             <p>
               Compare your Instagram <strong>followers</strong> and{" "}
               <strong>following</strong> lists. Upload one HTML/JSON file into{" "}
-              <em>Section One</em> and another into <em>Section Two</em>, then
-              use the switcher below to toggle the view.
+              <em>Section One</em> (Following) and another into <em>Section Two</em> (Followers),
+              then use the switcher below to toggle the view.
             </p>
             <p>
-              Built with React, Vite, and drag-and-drop uploads. Files are
-              processed locally in your browser.
+              Built with React, Vite, and drag-and-drop uploads. Files are processed locally in your browser.
             </p>
             <button
               className="modal__close"

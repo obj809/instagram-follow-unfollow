@@ -40,45 +40,28 @@ export default function Section1({ onFileSelect }) {
 
   const onChange = (e) => handleOneFile(e.target.files);
 
-  const onDragOver = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (modalOpen()) return;
-    setIsDragOver(true);
-  };
-
-  const onDragLeave = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragOver(false);
-  };
+  // ✅ Always cancel default on drag so this section is a valid drop target
+  const onDragEnter = (e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(true); };
+  const onDragOver  = (e) => { e.preventDefault(); e.stopPropagation(); if (!isDragOver) setIsDragOver(true); };
+  const onDragLeave = (e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(false); };
 
   const onDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragOver(false);
-    if (modalOpen()) return;
+    if (modalOpen()) return; // ⬅️ gate only here
+    console.log("[DROP] Section 1"); // debug; remove later
     handleOneFile(e.dataTransfer.files);
   };
 
-  const onKeyDown = (e) => {
-    if (modalOpen()) return;
-    if (e.key === "Enter" || e.key === " ") openPicker();
-  };
-
-  const onClick = (e) => {
-    if (modalOpen()) {
-      e.stopPropagation();
-      return;
-    }
-    openPicker();
-  };
+  const onKeyDown = (e) => { if (!modalOpen() && (e.key === "Enter" || e.key === " ")) openPicker(); };
+  const onClick   = (e) => { if (modalOpen()) { e.stopPropagation(); return; } openPicker(); };
 
   const formatSize = (bytes) => {
     if (bytes == null) return "";
     if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+    if (bytes < 1024 * 1024) return `${(bytes/1024).toFixed(1)} KB`;
+    return `${(bytes/1024/1024).toFixed(1)} MB`;
   };
 
   return (
@@ -89,8 +72,8 @@ export default function Section1({ onFileSelect }) {
       aria-label="Choose or drop an HTML/JSON file for Section One (Following)"
       onClick={onClick}
       onKeyDown={onKeyDown}
+      onDragEnter={onDragEnter}
       onDragOver={onDragOver}
-      onDragEnter={onDragOver}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
     >
