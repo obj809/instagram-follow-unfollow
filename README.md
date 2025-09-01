@@ -7,4 +7,4 @@ This web app lets you upload your exported Instagram data (JSON or HTML) to iden
 ![App Screenshot](./src/assets/project-screenshot.png)
 
 ## Deployment Link
-This project is deployed and can be viewed [here](https://github.com/obj809/instagram-follow-unfollow).
+This project is deployed and can be viewed [here](https://dashboard-ig-follow-unfollow.netlify.app/).
