@@ -1,0 +1,73 @@
+/* src/components/SwitchBar/SwitchBar.scss */
+
+.switchBar {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* label at top, buttons at bottom */
+  align-items: center;
+  padding: 1rem;
+  pointer-events: none;
+}
+
+.switchBar__label {
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1.4;
+  color: #fff;
+  text-align: center;
+  background: rgba(0,0,0,0.35);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  max-width: 90%;
+  pointer-events: auto;
+}
+
+.switchBar__buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  pointer-events: auto;
+}
+
+/* shared dimensions */
+.switchBar__button,
+.switchBar__about {
+  border-radius: 8px;
+  padding: 0.65rem 1.2rem;
+  min-height: 44px;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+/* Switch button */
+.switchBar__button {
+  border: 0;
+  background: #4CAF50;
+  color: #fff;
+}
+.switchBar__button:hover { transform: translateY(-2px); background: #45a049; }
+.switchBar__button:active { transform: translateY(0); }
+
+/* About button (light blue) — IMPORTANT: ensure it's not absolutely positioned */
+.switchBar__about {
+  /* neutralize any global .about-link rules */
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+
+  border: 0;
+  background: #4FC3F7;
+  color: #fff;
+}
+.switchBar__about:hover { transform: translateY(-2px); background: #42B7EB; }
+.switchBar__about:active { transform: translateY(0); }
