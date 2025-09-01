@@ -1,6 +1,5 @@
 // src/components/SwitchBar/SwitchBar.jsx
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SwitchBar.scss";
 
 export default function SwitchBar() {
@@ -20,14 +19,31 @@ export default function SwitchBar() {
 
   const closeAbout = (e) => {
     if (e) {
-      e.preventDefault();
-      e.stopPropagation();
+      e.preventDefault?.();
+      e.stopPropagation?.();
     }
     setShowAbout(false);
   };
 
+  // ✅ Close on ESC key
+  useEffect(() => {
+    if (!showAbout) return;
+    const handler = (e) => {
+      if (e.key === "Escape" || e.key === "Esc") {
+        closeAbout();
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [showAbout]);
+
   return (
-    <div className="switchBar" role="region" aria-label="Follow comparison mode">
+    <div
+      className="switchBar"
+      role="region"
+      aria-label="Follow comparison mode"
+      style={{ pointerEvents: showAbout ? "auto" : undefined }}
+    >
       <div className="switchBar__label" aria-live="polite">
         {label}
       </div>
@@ -66,20 +82,11 @@ export default function SwitchBar() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="about-modal-title"
-          onClick={closeAbout}
-          onMouseDown={(e) => {
-            e.stopPropagation();
-          }}
+          onClick={closeAbout} // click backdrop
         >
           <div
             className="modal__dialog"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-            onMouseDown={(e) => {
-              e.stopPropagation();
-            }}
+            onClick={(e) => e.stopPropagation()}
           >
             <h3 id="about-modal-title">About This App</h3>
             <p>

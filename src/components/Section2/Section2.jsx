@@ -1,7 +1,8 @@
 // src/components/Section2/Section2.jsx
-
 import React, { useRef, useState, useCallback } from "react";
 import "./Section2.scss";
+
+const modalOpen = () => !!document.querySelector('.modal[aria-modal="true"]');
 
 export default function Section2({ onFileSelect }) {
   const fileInputRef = useRef(null);
@@ -38,16 +39,46 @@ export default function Section2({ onFileSelect }) {
   };
 
   const onChange = (e) => handleOneFile(e.target.files);
-  const onDragOver = (e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(true); };
-  const onDragLeave = (e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(false); };
-  const onDrop = (e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(false); handleOneFile(e.dataTransfer.files); };
-  const onKeyDown = (e) => { if (e.key === "Enter" || e.key === " ") openPicker(); };
+
+  const onDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (modalOpen()) return;
+    setIsDragOver(true);
+  };
+
+  const onDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+  };
+
+  const onDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+    if (modalOpen()) return;
+    handleOneFile(e.dataTransfer.files);
+  };
+
+  const onKeyDown = (e) => {
+    if (modalOpen()) return;
+    if (e.key === "Enter" || e.key === " ") openPicker();
+  };
+
+  const onClick = (e) => {
+    if (modalOpen()) {
+      e.stopPropagation();
+      return;
+    }
+    openPicker();
+  };
 
   const formatSize = (bytes) => {
     if (bytes == null) return "";
     if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes/1024).toFixed(1)} KB`;
-    return `${(bytes/1024/1024).toFixed(1)} MB`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
   };
 
   return (
@@ -55,15 +86,14 @@ export default function Section2({ onFileSelect }) {
       className={`section section2 ${isDragOver ? "is-dragover" : ""}`}
       role="button"
       tabIndex={0}
-      aria-label="Choose or drop an HTML/JSON file for Section 2"
-      onClick={openPicker}
+      aria-label="Choose or drop an HTML/JSON file for Section Two (Followers)"
+      onClick={onClick}
       onKeyDown={onKeyDown}
       onDragOver={onDragOver}
       onDragEnter={onDragOver}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
     >
-      {/* Clear (X) button — only visible when a file is present */}
       {file && (
         <button
           type="button"
@@ -85,8 +115,8 @@ export default function Section2({ onFileSelect }) {
           </div>
         ) : (
           <>
-            <h2>Section Two</h2>
-            <p>Drag & drop files here, or click to browse</p>
+            <h4>Upload your Instagram Follower export (JSON/HTML).</h4>
+            <p>Drag & drop the file here, or click to browse.</p>
           </>
         )}
       </div>
