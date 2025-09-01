@@ -1,0 +1,12 @@
+// src/pages/HomePage/HomePage.scss
+
+/* Full-bleed horizontal strip of three equal sections */
+.homePage {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;          /* use viewport width to avoid parent constraints */
+  height: 100vh;         /* fill viewport height */
+  height: 100dvh;        /* modern browsers: avoids mobile URL bar gaps */
+  margin: 0;
+  padding: 0;
+}
