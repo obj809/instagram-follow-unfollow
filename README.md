@@ -1,3 +1,3 @@
 # instagram-follow-unfollow
 
-![App Screenshot](./assets/project-screenshot.png)
+![App Screenshot](./src/assets/project-screenshot.png)
