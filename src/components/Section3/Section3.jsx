@@ -4,16 +4,15 @@ import "./Section3.scss";
 import SwitchBar from "../SwitchBar/SwitchBar";
 
 export default function Section3({
-  showTextBox,         // true when both files are present
+  showTextBox,   // true when both files are present
   loading,
   error,
   results,
-  onClearAll,          // () => void  clears both Section1 & Section2 files
+  onClearAll,    // () => void  clears both Section1 & Section2
 }) {
   const [showPrompt, setShowPrompt] = useState(false);
   const [mode, setMode] = useState("following_not_following_back");
 
-  // Build current list & heading
   const list = useMemo(() => {
     if (!results) return [];
     return mode === "following_not_following_back"
@@ -26,14 +25,11 @@ export default function Section3({
       ? "Accounts Not Following You Back"
       : "Accounts You Don’t Follow Back";
 
-  // Open the "Upload Required" modal only when files are missing
   const handleClickRoot = () => {
     if (!showTextBox) setShowPrompt(true);
   };
-
   const closePrompt = () => setShowPrompt(false);
 
-  // Keyboard: open on Enter/Space, close modal on ESC
   const onKeyDownRoot = (e) => {
     if (!showTextBox && (e.key === "Enter" || e.key === " ")) {
       e.preventDefault();
@@ -62,7 +58,7 @@ export default function Section3({
       onClick={handleClickRoot}
       onKeyDown={onKeyDownRoot}
     >
-      {/* Clear-all button (top-right) appears only when both files are present */}
+      {/* Clear-all button (top-right); styling reused via .file-clear */}
       {showTextBox && (
         <button
           type="button"
@@ -78,7 +74,6 @@ export default function Section3({
         </button>
       )}
 
-      {/* Intro (centered) when files not uploaded yet */}
       {!showTextBox && (
         <div className="section__content" onClick={(e) => e.stopPropagation()}>
           <h2>Comparison Results</h2>
@@ -86,7 +81,6 @@ export default function Section3({
         </div>
       )}
 
-      {/* Scrollable results when files present */}
       {showTextBox && (
         <div
           className="results"
@@ -121,10 +115,8 @@ export default function Section3({
         </div>
       )}
 
-      {/* Bottom controls (Switch / About) */}
       <SwitchBar onModeChange={setMode} />
 
-      {/* Upload Required modal (restored & robust) */}
       {showPrompt && !showTextBox && (
         <div
           className="modal"
@@ -132,14 +124,13 @@ export default function Section3({
           aria-modal="true"
           aria-labelledby="s3-modal-title"
           onClick={(e) => {
-            // Clicking the backdrop closes the modal
             e.stopPropagation();
             closePrompt();
           }}
         >
           <div
             className="modal__dialog"
-            onClick={(e) => e.stopPropagation()} // keep clicks inside
+            onClick={(e) => e.stopPropagation()}
           >
             <h3 id="s3-modal-title">Upload Required</h3>
             <p>

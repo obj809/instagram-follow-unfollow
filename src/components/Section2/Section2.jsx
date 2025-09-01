@@ -1,10 +1,10 @@
 // src/components/Section2/Section2.jsx
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import "./Section2.scss";
 
 const modalOpen = () => !!document.querySelector('.modal[aria-modal="true"]');
 
-export default function Section2({ onFileSelect }) {
+export default function Section2({ onFileSelect, clearTrigger }) {
   const fileInputRef = useRef(null);
   const [file, setFile] = useState(null);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -32,15 +32,21 @@ export default function Section2({ onFileSelect }) {
   );
 
   const clearFile = (e) => {
-    e.stopPropagation();
+    if (e?.stopPropagation) e.stopPropagation();
     setFile(null);
     onFileSelect?.(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
+  // 🔔 Respond to external clear signal
+  useEffect(() => {
+    if (clearTrigger == null) return;
+    clearFile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clearTrigger]);
+
   const onChange = (e) => handleOneFile(e.target.files);
 
-  // ✅ Always cancel default on drag so this section is a valid drop target
   const onDragEnter = (e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(true); };
   const onDragOver  = (e) => { e.preventDefault(); e.stopPropagation(); if (!isDragOver) setIsDragOver(true); };
   const onDragLeave = (e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(false); };
@@ -49,8 +55,7 @@ export default function Section2({ onFileSelect }) {
     e.preventDefault();
     e.stopPropagation();
     setIsDragOver(false);
-    if (modalOpen()) return; // ⬅️ gate only here
-    console.log("[DROP] Section 2"); // debug; remove later
+    if (modalOpen()) return;
     handleOneFile(e.dataTransfer.files);
   };
 

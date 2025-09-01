@@ -1,4 +1,4 @@
-// src/components/Section3/Section3.scss
+/* src/components/Section3/Section3.scss */
 
 .section3 {
   position: relative;
@@ -31,7 +31,26 @@
 
 .section__content { max-width: 80%; }
 
-/* Inset box when prerequisites met */
+/* ✅ Scrollable results area (only shown after upload)
+   Keep it lightweight so it doesn't affect modal or root click handlers. */
+.results {
+  width: 100%;
+  max-width: 80%;
+  margin: 0 auto;
+
+  /* Let it grow, but clip to the section height so a scrollbar appears if needed.
+     The bottom padding keeps content clear of the Switch/About buttons overlay. */
+  max-height: calc(100% - 5rem);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable both-edges;
+  padding-bottom: 2.5rem;
+}
+
+.results h3 { margin: 0 0 0.5rem 0; }
+.results p  { margin: 0 0 1rem 0; }
+
+/* Old inset box kept for compatibility (no change) */
 .text-box {
   position: absolute;
   top: 15%;
@@ -86,7 +105,7 @@
   width: 100%;
 }
 
-/* ✅ NEW: container for buttons */
+/* Center modal button */
 .modal__actions {
   display: flex;
   justify-content: center;
@@ -106,3 +125,30 @@
 .modal__close:hover {
   background: #e5e5e5;
 }
+
+/* Clear (X) button identical to Section1/2 */
+.file-clear {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+
+  border: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1f2937; /* gray-800 */
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.file-clear:hover { background: #ffffff; transform: translateY(-1px); }
+.file-clear:active { transform: translateY(0); }
+.file-clear:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }

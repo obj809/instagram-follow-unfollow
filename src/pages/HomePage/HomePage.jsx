@@ -18,6 +18,9 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // 🔔 trigger value that Section1/2 listen to for clearing themselves
+  const [clearTick, setClearTick] = useState(0);
+
   // Parse both files when either changes
   useEffect(() => {
     let cancelled = false;
@@ -35,7 +38,6 @@ export default function HomePage() {
       try {
         if (file1) {
           const s1 = await parseInstagramFile(file1);
-          console.log("Parsed Following Set:", Array.from(s1));
           if (!cancelled) setFollowingSet(s1);
         } else if (!cancelled) {
           setFollowingSet(new Set());
@@ -43,7 +45,6 @@ export default function HomePage() {
 
         if (file2) {
           const s2 = await parseInstagramFile(file2);
-          console.log("Parsed Following Set:", Array.from(s2));
           if (!cancelled) setFollowersSet(s2);
         } else if (!cancelled) {
           setFollowersSet(new Set());
@@ -65,16 +66,24 @@ export default function HomePage() {
 
   const showTextBox = Boolean(followingSet.size && followersSet.size);
 
+  const handleClearAll = () => {
+    // Clear parent-held file references
+    setFile1(null);
+    setFile2(null);
+    // Nudge children to clear their internal file/input state
+    setClearTick((t) => t + 1);
+  };
+
   return (
     <div className="homePage">
-      <Section1 onFileSelect={setFile1} />
-      <Section2 onFileSelect={setFile2} />
+      <Section1 onFileSelect={setFile1} clearTrigger={clearTick} />
+      <Section2 onFileSelect={setFile2} clearTrigger={clearTick} />
       <Section3
         showTextBox={showTextBox}
         loading={loading}
         error={error}
         results={results}
-        debugLog={console.log("Section3 results", results)}
+        onClearAll={handleClearAll}
       />
     </div>
   );
