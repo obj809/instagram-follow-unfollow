@@ -1,36 +1,27 @@
 /* src/components/SwitchBar/SwitchBar.scss */
 
-/* Layout: label at top, buttons at bottom */
+/* Layout: only the buttons (label removed) */
 .switchBar {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end; /* keep buttons at the bottom */
   align-items: center;
   padding: 1rem;
-  pointer-events: none;
+  pointer-events: none; /* clicks pass through unless explicitly enabled on children */
 }
 
-.switchBar__label {
-  font-weight: 600;
-  font-size: 1.15rem;
-  line-height: 1.4;
-  color: #fff;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.35);
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
-  max-width: 90%;
-  pointer-events: auto;
-}
+/* Removed .switchBar__label styles */
 
+/* Bottom buttons row */
 .switchBar__buttons {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.75rem;
-  pointer-events: auto;
+  pointer-events: auto; /* clickable */
+  margin-bottom: 0.25rem;
 }
 
 /* Shared button base */
@@ -89,13 +80,8 @@
   filter: brightness(0.95);
 }
 
-/* About button — Lighter Indigo/Blue */
+/* About button — Indigo/Blue */
 .switchBar__about {
-  position: static !important;
-  top: auto !important;
-  left: auto !important;
-
-  /* lighter indigo gradient */
   background: linear-gradient(135deg, #7986CB, #5C6BC0);
 }
 .switchBar__about:hover {
@@ -105,3 +91,50 @@
 .switchBar__about:active {
   filter: brightness(0.95);
 }
+
+/* Modal base (shared pattern kept) */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 15, 20, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+}
+.modal__dialog {
+  background: #ffffff;
+  color: #1f2937;
+  width: min(90vw, 480px);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+
+  text-align: center;      /* title centered */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modal__dialog h3 { margin: 0 0 0.5rem 0; width: 100%; text-align: center; }
+.modal__dialog h4 { margin: 0.5rem 0; width: 100%; text-align: center; }
+.modal__dialog p  { margin: 0 0 1rem 0; line-height: 1.5; width: 100%; text-align: left; }
+.modal__dialog ol { margin: 0 0 1rem 1.25rem; width: 100%; text-align: left; }
+
+.modal__actions {
+  margin-top: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.modal__close {
+  display: inline-block;
+  background: #efefef;
+  border: 0;
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+.modal__close:hover { background: #e5e5e5; }

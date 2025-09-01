@@ -4,16 +4,12 @@ import "./SwitchBar.scss";
 
 /**
  * Uncontrolled SwitchBar (original structure & styles preserved).
- * Adds optional onModeChange callback (no visual changes).
+ * Now without the top status label; only the Switch and About buttons remain.
+ * Adds optional onModeChange callback (no visual changes beyond removing label).
  */
 export default function SwitchBar({ onModeChange }) {
   const [mode, setMode] = useState("following_not_following_back");
   const [showAbout, setShowAbout] = useState(false);
-
-  const label =
-    mode === "following_not_following_back"
-      ? "Showing: Not Following You Back"
-      : "Showing: You’re Not Following Back";
 
   const openAbout = (e) => {
     e.preventDefault();
@@ -48,12 +44,11 @@ export default function SwitchBar({ onModeChange }) {
     <div
       className="switchBar"
       role="region"
-      aria-label="Follow comparison mode"
+      aria-label="Follow comparison controls"
+      // allow clicks when About is open (since .switchBar has pointer-events: none)
       style={{ pointerEvents: showAbout ? "auto" : undefined }}
     >
-      <div className="switchBar__label" aria-live="polite">
-        {label}
-      </div>
+      {/* Label removed */}
 
       <div className="switchBar__buttons">
         <button
@@ -96,33 +91,51 @@ export default function SwitchBar({ onModeChange }) {
             onClick={(e) => e.stopPropagation()}
           >
             <h3 id="about-modal-title">About This App</h3>
+
             <p>
               Compare your Instagram <strong>followers</strong> and{" "}
               <strong>following</strong> lists by uploading one file into{" "}
               <em>Section One</em> (Following) and another into{" "}
-              <em>Section Two</em> (Followers). Use the switcher to toggle
-              views.
+              <em>Section Two</em> (Followers). Use the switcher to toggle views.
             </p>
+
+            <h4>How to export from Instagram (PC)</h4>
+            <ol>
+              <li>
+                Log in to Instagram and open{" "}
+                <strong>Settings &gt; Settings &amp; Privacy</strong>.
+              </li>
+              <li>
+                Go to{" "}
+                <strong>Accounts Centre &gt; Your information and permissions</strong>.
+              </li>
+              <li>
+                Select <strong>Export your information</strong> →{" "}
+                <strong>Create export</strong>.
+              </li>
+              <li>
+                Choose <strong>Export to device</strong> and select{" "}
+                <strong>HTML</strong> or <strong>JSON</strong>.
+              </li>
+              <li>
+                Click <strong>Start export</strong>, then when it’s ready select{" "}
+                <strong>Download information</strong>.
+              </li>
+            </ol>
+
             <p>
-              <strong>How to export from Instagram (PC):</strong>
-              <br />
-              1. Log in to Instagram and open{" "}
-              <em>Settings &gt; Settings &amp; Privacy</em>.<br />
-              2. Go to <em>Accounts Centre &gt; Your information and permissions</em>.<br />
-              3. Select <em>Export your information</em> → <em>Create export</em>.<br />
-              4. Choose <strong>Export to device</strong> and select{" "}
-              <strong>HTML</strong> or <strong>JSON</strong>.<br />
-              5. Click <em>Start export</em>, then once it’s ready,{" "}
-              <em>Download information</em>.<br />
-              6. Upload <code>followers.json</code>,{" "}
-              <code>following.json</code>, or their HTML versions into this app.
+              After downloading the export, unzip it and open{" "}
+              <code>connections</code> → <code>followers_and_following</code>.
+              Upload <code>following.json</code> into <strong>Section One</strong> (blue),
+              and <code>followers_1.json</code> into <strong>Section Two</strong> (purple).
             </p>
+
             <p>
-              All processing happens in your browser — there is{" "}
-              <strong>no server</strong>, <strong>no database</strong>, and{" "}
-              <strong>no storage</strong> of your files. Your data stays on your
-              device.
+              <strong>Privacy:</strong> All processing happens in your browser —
+              there is <strong>no server</strong>, <strong>no database</strong>, and{" "}
+              <strong>no storage</strong> of your files. Your data stays private on your device.
             </p>
+
             <div className="modal__actions">
               <button
                 className="modal__close"
