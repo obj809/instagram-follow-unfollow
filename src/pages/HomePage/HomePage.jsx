@@ -9,8 +9,8 @@ import Section3 from "../../components/Section3/Section3";
 import { parseInstagramFile, compareSets } from "../../utils/igParse";
 
 export default function HomePage() {
-  const [file1, setFile1] = useState(null); // Section1: Following
-  const [file2, setFile2] = useState(null); // Section2: Followers
+  const [file1, setFile1] = useState(null);
+  const [file2, setFile2] = useState(null);
 
   const [followingSet, setFollowingSet] = useState(new Set());
   const [followersSet, setFollowersSet] = useState(new Set());
@@ -18,10 +18,8 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // 🔔 trigger value that Section1/2 listen to for clearing themselves
   const [clearTick, setClearTick] = useState(0);
 
-  // Parse both files when either changes
   useEffect(() => {
     let cancelled = false;
 
@@ -67,10 +65,8 @@ export default function HomePage() {
   const showTextBox = Boolean(followingSet.size && followersSet.size);
 
   const handleClearAll = () => {
-    // Clear parent-held file references
     setFile1(null);
     setFile2(null);
-    // Nudge children to clear their internal file/input state
     setClearTick((t) => t + 1);
   };
 

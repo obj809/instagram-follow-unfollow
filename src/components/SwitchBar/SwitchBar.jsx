@@ -2,11 +2,6 @@
 import React, { useEffect, useState } from "react";
 import "./SwitchBar.scss";
 
-/**
- * Uncontrolled SwitchBar (original structure & styles preserved).
- * Now without the top status label; only the Switch and About buttons remain.
- * Adds optional onModeChange callback (no visual changes beyond removing label).
- */
 export default function SwitchBar({ onModeChange }) {
   const [mode, setMode] = useState("following_not_following_back");
   const [showAbout, setShowAbout] = useState(false);
@@ -25,12 +20,10 @@ export default function SwitchBar({ onModeChange }) {
     setShowAbout(false);
   };
 
-  // Notify parent (Section3) of mode changes, if provided
   useEffect(() => {
     onModeChange?.(mode);
   }, [mode, onModeChange]);
 
-  // Close About on ESC (keeps UI intact)
   useEffect(() => {
     if (!showAbout) return;
     const handler = (e) => {
@@ -45,10 +38,8 @@ export default function SwitchBar({ onModeChange }) {
       className="switchBar"
       role="region"
       aria-label="Follow comparison controls"
-      // allow clicks when About is open (since .switchBar has pointer-events: none)
       style={{ pointerEvents: showAbout ? "auto" : undefined }}
     >
-      {/* Label removed */}
 
       <div className="switchBar__buttons">
         <button

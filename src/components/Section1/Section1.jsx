@@ -38,11 +38,9 @@ export default function Section1({ onFileSelect, clearTrigger }) {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  // 🔔 Respond to external clear signal
   useEffect(() => {
     if (clearTrigger == null) return;
     clearFile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clearTrigger]);
 
   const onChange = (e) => handleOneFile(e.target.files);

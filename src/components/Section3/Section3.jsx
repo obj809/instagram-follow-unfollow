@@ -4,11 +4,11 @@ import "./Section3.scss";
 import SwitchBar from "../SwitchBar/SwitchBar";
 
 export default function Section3({
-  showTextBox,   // true when both files are present
+  showTextBox,
   loading,
   error,
   results,
-  onClearAll,    // () => void  clears both Section1 & Section2
+  onClearAll,
 }) {
   const [showPrompt, setShowPrompt] = useState(false);
   const [mode, setMode] = useState("following_not_following_back");
@@ -58,7 +58,6 @@ export default function Section3({
       onClick={handleClickRoot}
       onKeyDown={onKeyDownRoot}
     >
-      {/* Clear-all button (top-right); styling reused via .file-clear */}
       {showTextBox && (
         <button
           type="button"

@@ -1,30 +1,26 @@
 /* src/components/SwitchBar/SwitchBar.scss */
 
-/* Layout: only the buttons (label removed) */
 .switchBar {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* keep buttons at the bottom */
+  justify-content: flex-end;
   align-items: center;
   padding: 1rem;
-  pointer-events: none; /* clicks pass through unless explicitly enabled on children */
+  pointer-events: none;
 }
 
-/* Removed .switchBar__label styles */
 
-/* Bottom buttons row */
 .switchBar__buttons {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.75rem;
-  pointer-events: auto; /* clickable */
+  pointer-events: auto;
   margin-bottom: 0.25rem;
 }
 
-/* Shared button base */
 .switchBar__button,
 .switchBar__about {
   border: 0;
@@ -68,7 +64,6 @@
   outline-offset: 2px;
 }
 
-/* Switch button — Success Green */
 .switchBar__button {
   background: linear-gradient(135deg, #4CAF50, #388E3C);
 }
@@ -80,7 +75,6 @@
   filter: brightness(0.95);
 }
 
-/* About button — Indigo/Blue */
 .switchBar__about {
   background: linear-gradient(135deg, #7986CB, #5C6BC0);
 }
@@ -92,7 +86,6 @@
   filter: brightness(0.95);
 }
 
-/* Modal base (shared pattern kept) */
 .modal {
   position: fixed;
   inset: 0;
@@ -110,7 +103,7 @@
   padding: 1rem 1.25rem;
   box-shadow: 0 12px 40px rgba(0,0,0,0.35);
 
-  text-align: center;      /* title centered */
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;

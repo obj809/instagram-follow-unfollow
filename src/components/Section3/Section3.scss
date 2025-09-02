@@ -2,18 +2,17 @@
 
 .section3 {
   position: relative;
-  background: #F48FB1; /* playful pink */
+  background: #F48FB1;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   overflow: hidden;
-  cursor: pointer; /* pointer like other sections */
+  cursor: pointer;
   outline: none;
 }
 
-/* Hover overlay */
 .section3::after {
   content: "";
   position: absolute;
@@ -31,15 +30,12 @@
 
 .section__content { max-width: 80%; }
 
-/* ✅ Scrollable results area (only shown after upload)
-   Keep it lightweight so it doesn't affect modal or root click handlers. */
+
 .results {
   width: 100%;
   max-width: 80%;
   margin: 0 auto;
 
-  /* Let it grow, but clip to the section height so a scrollbar appears if needed.
-     The bottom padding keeps content clear of the Switch/About buttons overlay. */
   max-height: calc(100% - 5rem);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -50,12 +46,11 @@
 .results h3 { margin: 0 0 0.5rem 0; }
 .results p  { margin: 0 0 1rem 0; }
 
-/* Old inset box kept for compatibility (no change) */
 .text-box {
   position: absolute;
   top: 15%;
   right: 15%;
-  bottom: 30%; /* leave space so it doesn't overlap the 15% bottom bar */
+  bottom: 30%;
   left: 15%;
 
   display: flex;
@@ -70,7 +65,6 @@
   backdrop-filter: saturate(110%) blur(2px);
 }
 
-/* Modal styles (unchanged) */
 .modal {
   position: fixed;
   inset: 0;
@@ -88,7 +82,7 @@
   padding: 1rem 1.25rem;
   box-shadow: 0 12px 40px rgba(0,0,0,0.35);
 
-  text-align: center;  /* keeps title centered */
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,11 +95,10 @@
 .modal__dialog p {
   margin: 0 0 1rem 0;
   line-height: 1.5;
-  text-align: left;   /* body text left-aligned */
+  text-align: left;
   width: 100%;
 }
 
-/* Center modal button */
 .modal__actions {
   display: flex;
   justify-content: center;
@@ -126,7 +119,6 @@
   background: #e5e5e5;
 }
 
-/* Clear (X) button identical to Section1/2 */
 .file-clear {
   position: absolute;
   top: 12px;
@@ -142,7 +134,7 @@
   border: 0;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.9);
-  color: #1f2937; /* gray-800 */
+  color: #1f2937;
   font-size: 18px;
   line-height: 1;
   cursor: pointer;

@@ -2,7 +2,7 @@
 
 .section2 {
   position: relative;
-  background: #BA68C8; /* playful purple */
+  background: #BA68C8;
   color: #fff;
   display: flex;
   align-items: center;
@@ -31,7 +31,6 @@
 
 .section__content { max-width: 80%; }
 
-/* Single-file display */
 .file-single {
   display: flex;
   align-items: center;
@@ -49,7 +48,6 @@
 }
 .file-single__size { opacity: 0.95; }
 
-/* Clear (X) button */
 .file-clear {
   position: absolute;
   top: 12px;
